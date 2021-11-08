@@ -8,7 +8,7 @@
 
 - [react进阶(Redux)](./react/react进阶(Redux))
 
-### react
-- [Vue2](./vue2)
-### react
-- [Vue3](./vue3)
+### vue2
+- [vue2](./vue2)
+### vue3
+- [vue3](./vue3)
