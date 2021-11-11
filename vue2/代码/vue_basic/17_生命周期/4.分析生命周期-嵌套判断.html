@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>分析生命周期</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <!-- 准备好一个容器-->
+    <div id="root">
+      <component-a />
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示。
+
+    Vue.component("component-a", {
+      template: "<div><component-b /></div>",
+      beforeCreate() {
+        console.log("beforeCreate: A");
+      },
+      created() {
+        console.log("created: A");
+      },
+      beforeMount() {
+        console.log("beforeMount: A");
+      },
+      mounted() {
+        console.log("mounted: A");
+      },
+      beforeUpdate() {
+        console.log("beforeUpdate: A");
+      },
+      updated() {
+        console.log("updated: A");
+      },
+      beforeDestroy() {
+        console.log("beforeDestroy: A");
+      },
+      destroyed() {
+        console.log("destroyed: A");
+      },
+    });
+
+    Vue.component("component-b", {
+      template: `<p>
+        component-b: {{n}}
+        <button @click="add">点我n+1</button>
+      </p>`,
+      data() {
+        return {
+          n: 1
+        }
+      },
+      methods: {
+        add() {
+          this.n++;
+        }
+      },
+      beforeCreate() {
+        console.log("beforeCreate: B");
+      },
+      created() {
+        console.log("created: B");
+      },
+      beforeMount() {
+        console.log("beforeMount: B");
+      },
+      mounted() {
+        console.log("mounted: B");
+      },
+      beforeUpdate() {
+        console.log("beforeUpdate: B");
+      },
+      updated() {
+        console.log("updated: B");
+      },
+      beforeDestroy() {
+        console.log("beforeDestroy: B");
+      },
+      destroyed() {
+        console.log("destroyed: B");
+      },
+    });
+
+    new Vue({
+      el: "#root",
+      template:`
+      	<div>
+					<component-a v-if="show" />
+      		<h2>当前的n值是：{{n}}</h2>
+      		<button @click="add">点我n+1</button>
+					<button @click="bye">点我销毁vm</button>
+      	</div>
+      `,
+      data: {
+        n: 1,
+        show: false
+      },
+      methods: {
+        add() {
+          console.log("add");
+          this.n++;
+        },
+        bye() {
+          console.log("bye");
+          this.$destroy();
+        },
+      },
+      watch: {
+        n() {
+          console.log("n变了");
+        },
+      },
+      beforeCreate() {
+        console.log("beforeCreate: Root");
+      },
+      created() {
+        console.log("created: Root");
+      },
+      beforeMount() {
+        console.log("beforeMount: Root");
+      },
+      mounted() {
+        console.log("mounted: Root");
+        this.show = true
+      },
+      beforeUpdate() {
+        console.log("beforeUpdate: Root");
+      },
+      updated() {
+        console.log("updated: Root");
+      },
+      beforeDestroy() {
+        console.log("beforeDestroy: Root");
+      },
+      destroyed() {
+        console.log("destroyed: Root");
+      },
+    });
+  </script>
+</html>
